@@ -26,6 +26,8 @@ google_drive_paths = {
     "face.pt": "https://drive.google.com/uc?id=1dOBo4xWUwM7-BwHWZgp-kV1upaD6tHAh",
     "landscape.pt": "https://drive.google.com/uc?id=1rN5EhwiY95BBNPvOezhX4SZ_tEOR0qe2",
     "disney.pt": "https://drive.google.com/uc?id=1n2uQ5s2XdUBGIcZA9Uabz1mkjVvKWFeG",
+    "dog_anime.pt": "https://drive.google.com/file/d/1sHpPlOxCWNQGEk0iMsZ1Dnnb8CzLPP4p",
+    "dog.pt": "https://drive.google.com/file/d/1sHpPlOxCWNQGEk0iMsZ1Dnnb8CzLPP4p"
 }
 
 @torch.no_grad()
