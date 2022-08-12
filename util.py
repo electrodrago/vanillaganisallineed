@@ -26,13 +26,16 @@ google_drive_paths = {
     "face.pt": "https://drive.google.com/uc?id=1dOBo4xWUwM7-BwHWZgp-kV1upaD6tHAh",
     "landscape.pt": "https://drive.google.com/uc?id=1rN5EhwiY95BBNPvOezhX4SZ_tEOR0qe2",
     "disney.pt": "https://drive.google.com/uc?id=1n2uQ5s2XdUBGIcZA9Uabz1mkjVvKWFeG",
-    "dog_anime.pt": "https://drive.google.com/file/d/1sHpPlOxCWNQGEk0iMsZ1Dnnb8CzLPP4p",
-    "dog.pt": "https://drive.google.com/file/d/1sHpPlOxCWNQGEk0iMsZ1Dnnb8CzLPP4p"
+    "dog_anime.pt": "https://drive.google.com/uc?id=1sHpPlOxCWNQGEk0iMsZ1Dnnb8CzLPP4p",
+    "dog.pt": "https://drive.google.com/uc?id=1UmcgF6fNdNVumwYhkje6D9ubLZqOarnx"
 }
 
 @torch.no_grad()
 def load_model(generator, model_file_path):
-    ensure_checkpoint_exists(model_file_path)
+    if model_file_path == "dog_anime.pt" or model_file_path == "dog.pt":
+        pass
+    else:
+        ensure_checkpoint_exists(model_file_path)
     ckpt = torch.load(model_file_path, map_location=lambda storage, loc: storage)
     generator.load_state_dict(ckpt["g_ema"], strict=False)
     return generator.mean_latent(50000)
