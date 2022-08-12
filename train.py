@@ -35,6 +35,7 @@ from non_leaking import augment
 
 wandb.login(key="67f341d49c7b00d8329890e172fcaf44603234ca")
 experiment_name = wandb.util.generate_id()
+wandb.init(project="stylegan2-dog", entity="electrodragon")
 wandb.config = {
   "learning_rate": 0.001,
   "epochs": 100,
@@ -332,7 +333,7 @@ def train(args, loader, generator, discriminator, g_optim, d_optim, g_ema, devic
                         normalize=True,
                         range=(-1, 1),
                     )
-                    wandb.log(wandb.Image(f"sample_{args.dataset}/{str(i).zfill(6)}.png"))
+                    wandb.log({"Image":wandb.Image(f"sample_{args.dataset}/{str(i).zfill(6)}.png")})
 
             if i % 2000 == 0:
                 torch.save(
@@ -358,7 +359,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
 
     #parser.add_argument("path", type=str)
-    parser.add_argument("--iter", type=int, default=10001)
+    parser.add_argument("--iter", type=int, default=100000)
     parser.add_argument("--batch", type=int, default=4)
     parser.add_argument("--n_sample", type=int, default=8)
     parser.add_argument("--size", type=int, default=256)
@@ -378,7 +379,7 @@ if __name__ == "__main__":
     parser.add_argument("--augment_p", type=float, default=0)
     parser.add_argument("--ada_target", type=float, default=0.6)
     parser.add_argument("--ada_length", type=int, default=500 * 1000)
-    parser.add_argument("--dataset", type=str, default='disney')
+    parser.add_argument("--dataset", type=str, default='dog')
 
     args = parser.parse_args()
 
@@ -474,7 +475,7 @@ if __name__ == "__main__":
     os.makedirs(f'checkpoint_{args.dataset}', exist_ok=True)
     os.makedirs(f'sample_{args.dataset}', exist_ok=True)
 
-    dataset = ImageFolder('/content/drive/MyDrive/cartoon', transform)
+    dataset = ImageFolder('/content/trainA', transform)
     loader = data.DataLoader(
         dataset,
         batch_size=args.batch,
@@ -482,8 +483,5 @@ if __name__ == "__main__":
         drop_last=True,
         num_workers=4,
     )
-
-    if get_rank() == 0 and wandb is not None and args.wandb:
-        wandb.init(project="stylegan2", entity="electrodragon")
 
     train(args, loader, generator, discriminator, g_optim, d_optim, g_ema, device)
