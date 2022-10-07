@@ -35,7 +35,7 @@ from non_leaking import augment
 
 wandb.login(key="67f341d49c7b00d8329890e172fcaf44603234ca")
 experiment_name = wandb.util.generate_id()
-wandb.init(project="stylegan2-dog", entity="electrodragon")
+wandb.init(project="stylegan2-together", entity="electrodragon")
 wandb.config = {
   "learning_rate": 0.001,
   "epochs": 100,
@@ -475,7 +475,7 @@ if __name__ == "__main__":
     os.makedirs(f'checkpoint_{args.dataset}', exist_ok=True)
     os.makedirs(f'sample_{args.dataset}', exist_ok=True)
 
-    dataset = ImageFolder('/content/trainA', transform)
+    dataset = ImageFolder('/content/drive/MyDrive/dataset/together', transform)
     loader = data.DataLoader(
         dataset,
         batch_size=args.batch,
